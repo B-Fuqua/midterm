@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey</title>
+</head>
+<body>
+    <h1>Midterm Survey</h1>
+
+    <form action="#" method="post">
+        <div class="form-group">
+            <label for="name" class="control-label">Your name:</label><br>
+            <input class="form-control" type="text" name="name" id="name" value="{{ @userName }}">
+
+            <!-- Display an error message if there is one -->
+            <check if="{{ isset(@errors['name']) }}">
+                <span class="err">{{ @errors['name'] }}</span>
+            </check><br>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Check all that apply:</label><br>
+            <repeat group="{{ @choices }}" value="{{ @choice }}">
+                <input type="checkbox" name="choices[]" value="{{ @choice }}"
+                       <check if="{{ in_array(@choice, @userChoices) }}">
+                           checked = "checked"
+                       </check>>
+                <label>{{ @choice }}</label><br>
+            </repeat>
+
+            <!-- Display an error message if there is one -->
+            <check if="{{ isset(@errors['choices']) }}">
+                <span class="err">{{ @errors['choices'] }}</span>
+            </check><br>
+            <input type="submit" class="btn">
+        </div>
+    </form>
+</body>
+</html>
