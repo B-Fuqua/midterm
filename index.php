@@ -23,14 +23,16 @@ $f3->route('GET /', function(){
 
 $f3->route('GET|POST /survey', function($f3){
 
+    //Reset the session array
     $_SESSION = array();
 
+    //Set values to empty
     $userName = "";
     $userChoices = array();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-
+        header('location: summary');
     }
 
     //Set the survey choices in the hive
@@ -45,6 +47,12 @@ $f3->route('GET|POST /survey', function($f3){
     //Display the home page
     $view = new Template();
     echo $view->render('views/survey.html');
+});
+
+$f3->route('GET /summary', function(){
+    //Display the summary page
+    $view = new Template();
+    echo $view->render('views/summary.html');
 });
 
 //Run Fat-Free
