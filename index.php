@@ -10,6 +10,7 @@ session_start();
 
 //Require necessary files
 require_once ('vendor/autoload.php');
+require_once ('model/validation.php');
 
 //Instantiate Fat-Free
 $f3 = Base::instance();
@@ -32,7 +33,34 @@ $f3->route('GET|POST /survey', function($f3){
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        header('location: summary');
+        $userName = $_POST['name'];
+
+        //If name is valid
+        if (validName($_POST['name']))
+        {
+            $_SESSION['userName'] = $_POST['name'];
+        }
+        else
+        {
+            $f3->set('errors["name"]', 'Please enter your name');
+        }
+
+        //If choices are valid
+        if (validChoices($_POST['choices']))
+        {
+            $userChoices = $_POST['choices'];
+            $_SESSION['userChoices'] = implode(", ", $_POST['choices']);
+        }
+        else
+        {
+            $f3->set('errors["choices"]', 'Please choose at least one');
+        }
+
+        //If there are no errors redirect to summary route
+        if (empty($f3->get('errors')))
+        {
+            header('location: summary');
+        }
     }
 
     //Set the survey choices in the hive

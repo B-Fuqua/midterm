@@ -10,7 +10,7 @@
     <form action="#" method="post">
         <div class="form-group">
             <label for="name" class="control-label">Your name:</label><br>
-            <input class="form-control" type="text" name="name" id="name" value="{{ @userName }}">
+            <input class="form-control" type="text" name="name" id="name" value="{{ @userName }}"><br>
 
             <!-- Display an error message if there is one -->
             <check if="{{ isset(@errors['name']) }}">
